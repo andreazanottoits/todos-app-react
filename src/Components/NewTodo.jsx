@@ -25,7 +25,7 @@ export default function NewTodo() {
             colorScheme="green"
             onClick={() => {
               settoDoList([...toDoList, toDoValue]);
-              console.log(toDoList);
+              settoDoValue('')
             }}
           >
             Create ToDo
