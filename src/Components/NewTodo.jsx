@@ -10,7 +10,7 @@ export default function NewTodo() {
   const addTodo = () => {
     if (toDoList.includes(toDoValue)) {
       alert('Questo ToDo è già presente nella lista');
-    } else {
+    } else if (toDoValue !== '') {
       settoDoList([...toDoList, toDoValue]);
       settoDoValue('');
     }
@@ -18,6 +18,17 @@ export default function NewTodo() {
 
   function DeleteToDoFunc(toDoId) {
     settoDoList(toDoList.filter(toDo => toDo !== toDoList[toDoId]));
+  }
+
+  function ModifyToDoFunc(toDoId) {
+    const todoText = prompt('Please enter toDo');
+    if (!toDoList.includes(todoText)) {
+      let todoListtemp = [...toDoList];
+      todoListtemp[toDoId] = todoText;
+      settoDoList(todoListtemp);
+    } else {
+      alert('Questo ToDo è già presente nella lista');
+    }
   }
 
   return (
@@ -45,7 +56,11 @@ export default function NewTodo() {
           </Button>
         </Box>
       </Flex>
-      <ToDoList toDoList={toDoList} deleteTodoFunc={DeleteToDoFunc} />
+      <ToDoList
+        toDoList={toDoList}
+        deleteTodoFunc={DeleteToDoFunc}
+        modifyToDoFunc={ModifyToDoFunc}
+      />
     </Box>
   );
 }
