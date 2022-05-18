@@ -1,14 +1,14 @@
-import { Flex, Box, Text, Button } from '@chakra-ui/react';
+import { Flex, Text, Button } from '@chakra-ui/react';
 
 export default function ToDoList({ toDoList }) {
   return (
     <Flex flexDirection={'column'} height={'100vh'} width={'100vh'}>
-      {toDoList.map(item => (
-        <Box>
-          <Text>{item}</Text>
+      {toDoList.map((item, index) => (
+        <Flex mt={'25'} key={index}>
+          <Text flexGrow={'2'}>{item}</Text>
           <Button colorScheme="yellow">Modifica</Button>
-          <Button colorScheme="red">Elimina</Button>
-        </Box>
+          <Button ml={'5'} colorScheme="red">Elimina</Button>
+        </Flex>
       ))}
     </Flex>
   );
