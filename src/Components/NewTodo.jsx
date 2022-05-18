@@ -3,18 +3,19 @@ import { React, useState, useEffect } from 'react';
 import ToDoList from './ToDoList';
 import date from 'date-and-time';
 
+
 export default function NewTodo() {
 
   const [toDoValueText, settoDoValueText] = useState('');
 
-  const toDoListLocalStorage = JSON.parse(localStorage.getItem('toDoList')) || {};
+  const getInitialToDosFromLocalStorage = () =>
+    JSON.parse(localStorage.getItem('toDoList')) || [{}];
 
-  const [toDoList, settoDoList] = useState(toDoListLocalStorage);
+  const [toDoList, settoDoList] = useState(getInitialToDosFromLocalStorage);
 
   useEffect(() => {
     localStorage.setItem('toDoList', JSON.stringify(toDoList));
-  },[toDoList]) 
-
+  }, [toDoList]);
 
   const addTodo = () => {
     if (toDoList.filter(e => e.Text === toDoValueText).length > 0) {
