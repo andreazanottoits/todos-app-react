@@ -1,7 +1,7 @@
 import React from 'react';
 import NewTodo from './Components/NewTodo';
 
-import { ChakraProvider, Flex, theme } from '@chakra-ui/react';
+import { ChakraProvider, Flex, theme, Heading } from '@chakra-ui/react';
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
         alignItems={'center'}
         height={'100vh'}
       >
+        <Heading mb={'10'}>ToDo List</Heading>
         <NewTodo />
       </Flex>
     </ChakraProvider>
