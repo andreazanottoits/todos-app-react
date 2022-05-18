@@ -1,10 +1,15 @@
 import { Input, Button, Flex, Box } from '@chakra-ui/react';
 import { React, useState } from 'react';
 import ToDoList from './ToDoList';
+
 export default function NewTodo() {
   const [toDoValue, settoDoValue] = useState('');
 
   const [toDoList, settoDoList] = useState([]);
+
+  function DeleteToDoFunc(toDoId) {
+    settoDoList(toDoList.filter(toDo => toDo !== toDoList[toDoId]));
+  }
 
   return (
     <Box>
@@ -32,7 +37,7 @@ export default function NewTodo() {
           </Button>
         </Box>
       </Flex>
-      <ToDoList toDoList={toDoList} />
+      <ToDoList toDoList={toDoList} deleteTodoFunc={DeleteToDoFunc} />
     </Box>
   );
 }
