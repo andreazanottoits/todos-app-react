@@ -7,6 +7,15 @@ export default function NewTodo() {
 
   const [toDoList, settoDoList] = useState([]);
 
+  const addTodo = () => {
+    if (toDoList.includes(toDoValue)) {
+      alert('Questo ToDo è già presente nella lista');
+    } else {
+      settoDoList([...toDoList, toDoValue]);
+      settoDoValue('');
+    }
+  };
+
   function DeleteToDoFunc(toDoId) {
     settoDoList(toDoList.filter(toDo => toDo !== toDoList[toDoId]));
   }
@@ -29,8 +38,7 @@ export default function NewTodo() {
             ml={20}
             colorScheme="green"
             onClick={() => {
-              settoDoList([...toDoList, toDoValue]);
-              settoDoValue('')
+              addTodo();
             }}
           >
             Create ToDo
