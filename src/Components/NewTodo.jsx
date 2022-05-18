@@ -1,18 +1,23 @@
 import { Input, Button, Flex, Box } from '@chakra-ui/react';
 import { React, useState } from 'react';
 import ToDoList from './ToDoList';
+import date from 'date-and-time';
 
 export default function NewTodo() {
-  const [toDoValue, settoDoValue] = useState('');
-
+  const [toDoValueText, settoDoValueText] = useState('');
   const [toDoList, settoDoList] = useState([]);
 
   const addTodo = () => {
-    if (toDoList.includes(toDoValue)) {
+    if (toDoList.filter(e => e.Text === toDoValueText).length > 0) {
       alert('Questo ToDo è già presente nella lista');
-    } else if (toDoValue !== '') {
-      settoDoList([...toDoList, toDoValue]);
-      settoDoValue('');
+    } else if (toDoValueText !== '') {
+      const now = new Date();
+      let todo = {
+        Text: toDoValueText,
+        Timestamp: date.format(now, 'DD/MM/YYYY HH:mm:ss'),
+      };
+      settoDoList([...toDoList, todo]);
+      settoDoValueText('');
     }
   };
 
@@ -24,7 +29,11 @@ export default function NewTodo() {
     const todoText = prompt('Please enter toDo');
     if (!toDoList.includes(todoText)) {
       let todoListtemp = [...toDoList];
-      todoListtemp[toDoId] = todoText;
+      const now = new Date();
+      todoListtemp[toDoId] = {
+        Text: todoText,
+        Timestamp: date.format(now, 'DD/MM/YYYY HH:mm:ss'),
+      };
       settoDoList(todoListtemp);
     } else {
       alert('Questo ToDo è già presente nella lista');
@@ -37,10 +46,11 @@ export default function NewTodo() {
         <Box>
           <Input
             size="lg"
-            value={toDoValue}
+            width={'100vh'}
+            value={toDoValueText}
             placeholder="Insert Todo"
             onChange={e => {
-              settoDoValue(e.target.value);
+              settoDoValueText(e.target.value);
             }}
           />
         </Box>
