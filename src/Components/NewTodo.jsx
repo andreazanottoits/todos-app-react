@@ -1,11 +1,20 @@
 import { Input, Button, Flex, Box } from '@chakra-ui/react';
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import ToDoList from './ToDoList';
 import date from 'date-and-time';
 
 export default function NewTodo() {
+
   const [toDoValueText, settoDoValueText] = useState('');
-  const [toDoList, settoDoList] = useState([]);
+
+  const toDoListLocalStorage = JSON.parse(localStorage.getItem('toDoList')) || {};
+
+  const [toDoList, settoDoList] = useState(toDoListLocalStorage);
+
+  useEffect(() => {
+    localStorage.setItem('toDoList', JSON.stringify(toDoList));
+  },[toDoList]) 
+
 
   const addTodo = () => {
     if (toDoList.filter(e => e.Text === toDoValueText).length > 0) {
