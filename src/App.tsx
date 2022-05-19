@@ -1,5 +1,4 @@
-import React from 'react';
-import NewTodo from './Components/NewTodo';
+import NewTodo from './components/NewTodo';
 
 import { ChakraProvider, Flex, theme, Heading } from '@chakra-ui/react';
 
