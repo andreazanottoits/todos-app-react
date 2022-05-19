@@ -1,14 +1,14 @@
-import { Input, Button, Flex, Box } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
-import ToDoList from "./ToDoList";
-import date from "date-and-time";
-import { ToDoType } from "../interfaces/test";
+import { Input, Button, Flex, Box } from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
+import ToDoList from './ToDoList';
+import date from 'date-and-time';
+import { ToDoType } from '../interfaces/test';
 
 export default function NewTodo() {
-  const [toDoValueText, settoDoValueText] = useState("");
+  const [toDoValueText, settoDoValueText] = useState('');
 
   const getInitialToDosFromLocalStorage = (): ToDoType[] => {
-    const storage = localStorage.getItem("toDoList");
+    const storage = localStorage.getItem('toDoList');
     if (storage !== null) {
       return JSON.parse(storage);
     } else {
@@ -21,54 +21,57 @@ export default function NewTodo() {
   );
 
   useEffect(() => {
-    localStorage.setItem("toDoList", JSON.stringify(toDoList));
-    settoDoValueText("");
+    localStorage.setItem('toDoList', JSON.stringify(toDoList));
+    settoDoValueText('');
   }, [toDoList]);
 
   const addTodo = () => {
-    if (toDoList.filter((e) => e.Text === toDoValueText).length > 0) {
-      alert("Questo ToDo è già presente nella lista");
-    } else if (toDoValueText !== "") {
-      const now = new Date();
-      let todo: ToDoType = {
-        Text: toDoValueText,
-        Timestamp: date.format(now, "DD/MM/YYYY HH:mm:ss"),
-      };
-      settoDoList([...toDoList, todo]);
+    if (toDoValueText !== '') {
+      if (toDoList.filter(todo => todo.Text === toDoValueText).length > 0) {
+        alert('Questo ToDo è già presente nella lista');
+      } else {
+        const now = new Date();
+        let todo: ToDoType = {
+          Text: toDoValueText,
+          Timestamp: date.format(now, 'DD/MM/YYYY HH:mm:ss'),
+        };
+        settoDoList([...toDoList, todo]);
+      }
     }
   };
 
   function DeleteToDoFunc(toDoId: number) {
-    settoDoList(toDoList.filter((toDo) => toDo !== toDoList[toDoId]));
+    settoDoList(toDoList.filter(toDo => toDo !== toDoList[toDoId]));
   }
 
   function ModifyToDoFunc(toDoId: number) {
-    const todoText: string | null = prompt("Please enter toDo");
-    if (todoText != null) {
-      if (toDoList.filter((todo) => todo.Text === todoText).length > 0) {
-        let todoListtemp = [...toDoList];
+    const todoText: string | null = prompt('Please enter toDo');
+    if (todoText != null && todoText !== '') {
+      console.log(todoText);
+      if (toDoList.filter(todo => todo.Text === todoText).length === 0) {
+        const todoListtemp = [...toDoList];
         const now = new Date();
         todoListtemp[toDoId] = {
           Text: todoText,
-          Timestamp: date.format(now, "DD/MM/YYYY HH:mm:ss"),
+          Timestamp: date.format(now, 'DD/MM/YYYY HH:mm:ss'),
         };
         settoDoList(todoListtemp);
       } else {
-        alert("Questo ToDo è già presente nella lista");
+        alert('Questo ToDo è già presente nella lista');
       }
     }
   }
 
   return (
     <Box>
-      <Flex flexFlow={"row"} justifyContent={"center"} alignItems={"center"}>
+      <Flex flexFlow={'row'} justifyContent={'center'} alignItems={'center'}>
         <Box>
           <Input
             size="lg"
-            width={"100vh"}
+            width={'100vh'}
             value={toDoValueText}
             placeholder="Insert Todo"
-            onChange={(e) => {
+            onChange={e => {
               settoDoValueText(e.target.value);
             }}
           />
