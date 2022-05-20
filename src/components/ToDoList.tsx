@@ -1,5 +1,5 @@
 import { Flex, Text, Button } from '@chakra-ui/react';
-import { ToDoType, ToDoListType } from '../interfaces/test';
+import { ToDoType, ToDoListType } from '../interfaces/types';
 
 import {
   Table,
@@ -14,11 +14,12 @@ import {
 export default function ToDoList({
   toDoList,
   deleteTodoFunc,
-  modifyToDoFunc,
+  modifyTextToDoFunc: modifyToDoFunc,
+  completeTodoFunc: completedTodoFunc,
 }: ToDoListType) {
   return (
-    <Flex flexDirection={'column'} height={'100vh'} width={'100vh'}>
-      <TableContainer mt={'10'} overflow={'hidden'}>
+    <Flex flexDirection={'column'}>
+      <TableContainer mt={'10'}>
         <Table variant="simple">
           <Thead>
             <Tr>
@@ -30,15 +31,18 @@ export default function ToDoList({
           <Tbody>
             {toDoList.map((item: ToDoType, index: number) => (
               <Tr key={index}>
-                <Td>
-                  <Text>{item.Text}</Text>
+                <Td onClick={() => completedTodoFunc(index)}>
+                  <Text as={item.Completed ? 'del' : undefined}>{item.Text}</Text>
                 </Td>
-                <Td>
-                  <Text>{item.Timestamp}</Text>
+                <Td onClick={() => completedTodoFunc(index)}>
+                  <Text as={item.Completed ? 'del' : undefined}>
+                    {item.Timestamp}
+                  </Text>
                 </Td>
                 <Td>
                   <Button
                     colorScheme="yellow"
+                    visibility={item.Completed ? 'visible' : 'hidden'}
                     onClick={() => modifyToDoFunc(index)}
                   >
                     Modifica
