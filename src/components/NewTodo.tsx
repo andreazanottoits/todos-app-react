@@ -2,7 +2,7 @@ import { Input, Button, Flex, Box } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import ToDoList from './ToDoList';
 import date from 'date-and-time';
-import { ToDoType } from '../interfaces/test';
+import { ToDoType } from '../interfaces/types';
 
 export default function NewTodo() {
   const [toDoValueText, settoDoValueText] = useState('');
@@ -34,6 +34,7 @@ export default function NewTodo() {
         let todo: ToDoType = {
           Text: toDoValueText,
           Timestamp: date.format(now, 'DD/MM/YYYY HH:mm:ss'),
+          Completed: false,
         };
         settoDoList([...toDoList, todo]);
       }
@@ -44,22 +45,33 @@ export default function NewTodo() {
     settoDoList(toDoList.filter(toDo => toDo !== toDoList[toDoId]));
   }
 
-  function ModifyToDoFunc(toDoId: number) {
+  function ModifyTextToDoFunc(toDoId: number) {
     const todoText: string | null = prompt('Please enter toDo');
-    if (todoText != null && todoText !== '') {
-      console.log(todoText);
+    if (todoText) {
       if (toDoList.filter(todo => todo.Text === todoText).length === 0) {
         const todoListtemp = [...toDoList];
         const now = new Date();
         todoListtemp[toDoId] = {
           Text: todoText,
           Timestamp: date.format(now, 'DD/MM/YYYY HH:mm:ss'),
+          Completed: todoListtemp[toDoId].Completed,
         };
         settoDoList(todoListtemp);
       } else {
         alert('Questo ToDo è già presente nella lista');
       }
     }
+  }
+
+  function CompleteToDoFunc(index: number) {
+    const todoObj = toDoList[index];
+    const todoListtemp = [...toDoList];
+    todoListtemp[index] = {
+      Text: todoObj.Text,
+      Timestamp: todoObj.Timestamp,
+      Completed: !todoObj.Completed,
+    };
+    settoDoList(todoListtemp);
   }
 
   return (
@@ -92,7 +104,8 @@ export default function NewTodo() {
         <ToDoList
           toDoList={toDoList}
           deleteTodoFunc={DeleteToDoFunc}
-          modifyToDoFunc={ModifyToDoFunc}
+          modifyTextToDoFunc={ModifyTextToDoFunc}
+          completeTodoFunc={CompleteToDoFunc}
         />
       )}
     </Box>
