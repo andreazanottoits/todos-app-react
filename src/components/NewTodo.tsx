@@ -4,9 +4,20 @@ import ToDoList from './ToDoList';
 import date from 'date-and-time';
 import { ToDoType } from '../interfaces/types';
 
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+} from '@chakra-ui/react';
+
 export default function NewTodo() {
+  const TodoTextMaxLength = 20;
   const [toDoValueText, settoDoValueText] = useState('');
 
+  function ValidateTodoText(): boolean {
+    return toDoValueText.length > TodoTextMaxLength;
+  }
   const getInitialToDosFromLocalStorage = (): ToDoType[] => {
     const storage = localStorage.getItem('toDoList');
     if (storage !== null) {
@@ -76,30 +87,44 @@ export default function NewTodo() {
 
   return (
     <Box>
-      <Flex flexFlow={'row'} justifyContent={'center'} alignItems={'center'}>
-        <Box>
-          <Input
-            size="lg"
-            width={'100vh'}
-            value={toDoValueText}
-            placeholder="Insert Todo"
-            onChange={e => {
-              settoDoValueText(e.target.value);
-            }}
-          />
-        </Box>
-        <Box>
-          <Button
-            ml={20}
-            colorScheme="green"
-            onClick={() => {
-              addTodo();
-            }}
-          >
-            Create ToDo
-          </Button>
-        </Box>
-      </Flex>
+      <FormControl isInvalid={ValidateTodoText()}>
+        <Flex flexFlow={'row'} justifyContent={'center'} alignItems={'center'}>
+          <Box>
+            <FormLabel htmlFor="text">ToDo Text</FormLabel>
+            <Input
+              id="text"
+              size="lg"
+              width={'100vh'}
+              value={toDoValueText}
+              placeholder="Insert Todo"
+              onChange={e => {
+                settoDoValueText(e.target.value);
+              }}
+            />
+            {ValidateTodoText() ? (
+              <FormErrorMessage>
+                the todo text has be to shorter than 20 characters.
+              </FormErrorMessage>
+            ) : (
+              <FormHelperText>Insert the text of the todo.</FormHelperText>
+            )}
+          </Box>
+          <Box>
+            <Button
+              ml={20}
+              type="submit"
+              disabled={ValidateTodoText()}
+              colorScheme="green"
+              onClick={() => {
+                addTodo();
+              }}
+            >
+              Create ToDo
+            </Button>
+          </Box>
+        </Flex>
+      </FormControl>
+
       {toDoList.length > 0 && (
         <ToDoList
           toDoList={toDoList}
