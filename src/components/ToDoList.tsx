@@ -24,7 +24,7 @@ export default function ToDoList({
           <Thead>
             <Tr>
               <Th>Text</Th>
-              <Th>Timespant</Th>
+              <Th>Creation Time</Th>
               <Th>Actions</Th>
             </Tr>
           </Thead>
@@ -42,7 +42,7 @@ export default function ToDoList({
                 <Td>
                   <Button
                     colorScheme="yellow"
-                    visibility={item.Completed ? 'visible' : 'hidden'}
+                    visibility={item.Completed ? 'hidden' : 'visible'}
                     onClick={() => modifyToDoFunc(index)}
                   >
                     Modifica
