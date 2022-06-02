@@ -1,5 +1,5 @@
 import { Flex, Text, Button } from '@chakra-ui/react';
-import { ToDoType, ToDoListType } from '../interfaces/types';
+import { ToDoType, ToDoListComponent } from '../interfaces/types';
 
 import {
   Table,
@@ -16,7 +16,7 @@ export default function ToDoList({
   deleteTodoFunc,
   modifyTextToDoFunc: modifyToDoFunc,
   completeTodoFunc: completedTodoFunc,
-}: ToDoListType) {
+}: ToDoListComponent) {
   return (
     <Flex flexDirection={'column'}>
       <TableContainer mt={'10'}>
@@ -32,7 +32,9 @@ export default function ToDoList({
             {toDoList.map((item: ToDoType, index: number) => (
               <Tr key={index}>
                 <Td onClick={() => completedTodoFunc(index)}>
-                  <Text as={item.Completed ? 'del' : undefined}>{item.Text}</Text>
+                  <Text as={item.Completed ? 'del' : undefined}>
+                    {item.Text}
+                  </Text>
                 </Td>
                 <Td onClick={() => completedTodoFunc(index)}>
                   <Text as={item.Completed ? 'del' : undefined}>
