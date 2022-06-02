@@ -4,9 +4,17 @@ export interface ToDoType {
   Completed: boolean;
 }
 
-export interface ToDoListType {
+export interface ToDoListComponent {
   toDoList: ToDoType[];
   deleteTodoFunc: Function;
   modifyTextToDoFunc: Function;
   completeTodoFunc: Function;
+}
+
+export interface ErrorMessageComponent {
+  errorMessage: string;
+}
+
+export interface LoginComponent {
+  setToken: Function;
 }
