@@ -1,4 +1,4 @@
-import { Input, Button, Flex, Box } from '@chakra-ui/react';
+import { Input, Button, Flex, Box, Heading } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import ToDoList from './ToDoList';
 import date from 'date-and-time';
@@ -87,6 +87,7 @@ export default function NewTodo() {
 
   return (
     <Box>
+      <Heading mb={'10'}>ToDo List</Heading>
       <FormControl isInvalid={ValidateTodoText()}>
         <Flex flexFlow={'row'} justifyContent={'center'} alignItems={'center'}>
           <Box>
