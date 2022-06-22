@@ -32,7 +32,9 @@ export default function ToDoList({
             {toDoList.map((item: ToDoType, index: number) => (
               <Tr key={index}>
                 <Td onClick={() => completedTodoFunc(index)}>
-                  <Text as={item.Completed ? 'del' : undefined}>{item.Text}</Text>
+                  <Text as={item.Completed ? 'del' : undefined}>
+                    {item.Text}
+                  </Text>
                 </Td>
                 <Td onClick={() => completedTodoFunc(index)}>
                   <Text as={item.Completed ? 'del' : undefined}>
@@ -45,14 +47,14 @@ export default function ToDoList({
                     visibility={item.Completed ? 'hidden' : 'visible'}
                     onClick={() => modifyToDoFunc(index)}
                   >
-                    Modifica
+                    Modify
                   </Button>
                   <Button
                     ml={'5'}
                     colorScheme="red"
                     onClick={() => deleteTodoFunc(index)}
                   >
-                    Elimina
+                    Delete
                   </Button>
                 </Td>
               </Tr>
